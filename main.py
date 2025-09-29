@@ -1,5 +1,5 @@
 from cliente import Cliente
-from datetime import datetime
+
 
 name = input("Insira o seu nome: ")
 eMAIL = input("Insira seu email: ")

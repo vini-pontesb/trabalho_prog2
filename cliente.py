@@ -1,5 +1,4 @@
 from datetime import datetime, date
-import random as rd
 
 
 class Cliente:
@@ -8,9 +7,7 @@ class Cliente:
         self._email = email
         self._idade = idade
         self._cpf = cpf
-        self.saldo = 0
-        self._bancos = ["Itaú", "Banco do Brasil",
-                        "Bradesco", "Caixa", "Santander"]
+        self._saldo = 0
         self.extrato = []
         self.cheque_especial = 500
         self.taxa_confeccao = 600
@@ -21,22 +18,20 @@ class Cliente:
         if self.transacao == "Depósito":
             self.extrato.append({
                 "Data": self.dataDep,
-                "Banco": self.banco_escolhido,
                 "Transação": self.transacao,
                 "Nome": self._nome,
                 "CPF": self._cpf,
                 "Valor do Depósito": self.valorDep,
-                "Saldo": self.saldo
+                "Saldo": self._saldo
             })
         elif self.transacao == "Saque":
             self.extrato.append({
                 "Data": self.dataSaq,
-                "Banco": self.banco_escolhido,
                 "Transação": self.transacao,
                 "Nome": self._nome,
                 "CPF": self._cpf,
                 "Valor do Saque": self.valorSaq,
-                "Saldo": self.saldo
+                "Saldo": self._saldo
             })
 
     def sacar(self, valorSaq, dataSaq=date.today()):
@@ -47,22 +42,22 @@ class Cliente:
         else:
             self.dataSaq = datetime.strptime(dataSaq, "%d/%m/%Y").date()
         self.transacao = "Saque"
-        if valorSaq <= self.saldo:
-            self.saldo -= valorSaq
+        if valorSaq <= self._saldo:
+            self._saldo -= valorSaq
             self.append()
-            return ("SAQUE", self.saldo, self.cheque_especial)
-        elif valorSaq > self.saldo and valorSaq <= self.saldo + self.cheque_especial:
-            valorSaq -= self.saldo
-            self.saldo = 0
+            return ("SAQUE", self._saldo, self.cheque_especial)
+        elif valorSaq > self._saldo and valorSaq <= self._saldo + self.cheque_especial:
+            valorSaq -= self._saldo
+            self._saldo = 0
             self.cheque_especial -= valorSaq
             self.append()
-            return ("CHEQUE ESPECIAL", self.saldo, self.cheque_especial)
-        elif valorSaq > self.saldo + self.cheque_especial:
-            return ("FALHA", self.saldo, self.cheque_especial)
+            return ("CHEQUE ESPECIAL", self._saldo, self.cheque_especial)
+        elif valorSaq > self._saldo + self.cheque_especial:
+            return ("FALHA", self._saldo, self.cheque_especial)
 
     def depositar(self, valorDep, dataDep=date.today()):
         self.valorDep = valorDep
-        self.saldo = valorDep + self.saldo
+        self._saldo = valorDep + self._saldo
         if dataDep == date.today():
             data_formatada = dataDep.strftime("%d/%m/%Y")
             self.dataDep = datetime.strptime(data_formatada, "%d/%m/%Y").date()
@@ -70,7 +65,7 @@ class Cliente:
             self.dataDep = datetime.strptime(dataDep, "%d/%m/%Y").date()
         self.transacao = "Despósito"
         self.append()
-        return self.saldo
+        return self._saldo
 
     def mostrar_extrato(self, data1, data2):
         dataInicial = datetime.strptime(data1, "%d/%m/%Y").date()

@@ -17,9 +17,6 @@ class Cliente:
         self.taxa_juros_mensal = 0.02
         self.taxa_seguro = 50
 
-    def banks(self):
-        self.banco_escolhido = rd.choice(self._bancos)
-
     def append(self):
         if self.transacao == "Depósito":
             self.extrato.append({

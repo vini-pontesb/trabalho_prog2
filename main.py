@@ -7,8 +7,6 @@ age = int(input("Insira sua idade: "))
 CPF = int(input("Insira seu CPF: "))
 cliente1 = Cliente(name, eMAIL, age, CPF)
 
-cliente1.banks()
-
 pergunta = int(input(
     "Siga as instruções:\n1 - Saque\n2 - Depósito\n3 - Exibir extrato\n4 - Simular financiamento\n-> "))
 while pergunta != 1 and pergunta != 2 and pergunta != 3 and pergunta != 4:

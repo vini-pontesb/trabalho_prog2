@@ -63,10 +63,7 @@ while interacao == True:
         dateStr1 = input("Insira a data inicial (DD/MM/AAAA): ")
         dateStr2 = input("Insira a data final (DD/MM/AAAA): ")
         extrato = cliente1.mostrar_extrato(dateStr1, dateStr2)
-        if not extrato:
-            print("Nenhuma movimentação encontrada")
-        else:
-            print(extrato)
+        print(extrato)
 
     elif pergunta == 4:
         valor_desejado = float(input("Insira o valor desejado: R$"))
